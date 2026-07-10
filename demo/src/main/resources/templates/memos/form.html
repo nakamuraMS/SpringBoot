@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title th:text="${memo.id} == null ? '新規作成' : '編集'"></title>
+  <style>
+    .error { color: red; font-size: 0.85em; margin-top: 4px; }
+    input.is-error, textarea.is-error { border: 1px solid red; }
+  </style>
 </head>
 <body>
   <h1 th:text="${memo.id} == null ? 'メモ新規作成' : 'メモ編集'"></h1>
@@ -14,12 +18,22 @@
 
     <div>
       <label>タイトル</label><br>
-      <input type="text" th:field="*{title}" placeholder="タイトルを入力">
+      <!-- エラーがある場合に is-error クラスを付与 -->
+      <input type="text"
+             th:field="*{title}"
+             th:classappend="${#fields.hasErrors('title')} ? 'is-error'"
+             placeholder="タイトルを入力">
+      <!-- エラーメッセージを表示 -->
+      <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
     </div>
     <br>
     <div>
       <label>内容</label><br>
-      <textarea th:field="*{content}" rows="5" cols="40" placeholder="内容を入力"></textarea>
+      <textarea th:field="*{content}"
+                th:classappend="${#fields.hasErrors('content')} ? 'is-error'"
+                rows="5" cols="40"
+                placeholder="内容を入力"></textarea>
+      <div class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
     </div>
     <br>
     <button type="submit">保存</button>

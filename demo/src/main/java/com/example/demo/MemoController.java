@@ -2,6 +2,8 @@ package com.example.demo;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -30,7 +32,10 @@ public class MemoController {
 
     // 新規作成フォーム送信
     @PostMapping
-    public String create(@ModelAttribute Memo memo) {
+    public String create(@Validated @ModelAttribute Memo memo, BindingResult result) {
+        if (result.hasErrors()) {
+            return "memos/form"; // エラーがあればフォームに戻る
+        }
         memoService.save(memo);
         return "redirect:/memos";
     }
@@ -44,7 +49,10 @@ public class MemoController {
 
     // 編集フォーム送信
     @PostMapping("/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute Memo memo) {
+    public String update(@PathVariable Long id, @Validated @ModelAttribute Memo memo, BindingResult result) {
+        if (result.hasErrors()) {
+            return "memos/form"; // エラーがあればフォームに戻る
+        }
         memo.setId(id);
         memoService.save(memo);
         return "redirect:/memos";
