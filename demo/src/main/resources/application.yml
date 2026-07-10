@@ -1,0 +1,28 @@
+# demo/src/main/resources/application.yml として配置してください
+# (application.properties は削除するか、リネームしてバックアップしておいてください)
+
+spring:
+  application:
+    name: demo
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/kasoudb?useSSL=false&serverTimezone=Asia/Tokyo&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: kasouuser
+    password: kasoupass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # 学習用: Entityからテーブルを自動生成・更新します
+    show-sql: true        # 実行されるSQLをログに出力します
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.hibernate.SQL: debug

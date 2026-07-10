@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${memo.id} == null ? '新規作成' : '編集'"></title>
+</head>
+<body>
+  <h1 th:text="${memo.id} == null ? 'メモ新規作成' : 'メモ編集'"></h1>
+
+  <!-- 新規作成は POST /memos、編集は POST /memos/{id} -->
+  <form th:action="${memo.id} == null ? '/memos' : '/memos/' + ${memo.id}"
+        th:object="${memo}"
+        method="post">
+
+    <div>
+      <label>タイトル</label><br>
+      <input type="text" th:field="*{title}" placeholder="タイトルを入力">
+    </div>
+    <br>
+    <div>
+      <label>内容</label><br>
+      <textarea th:field="*{content}" rows="5" cols="40" placeholder="内容を入力"></textarea>
+    </div>
+    <br>
+    <button type="submit">保存</button>
+    <a href="/memos">キャンセル</a>
+  </form>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>メモ一覧</title>
+</head>
+<body>
+  <h1>メモ一覧</h1>
+
+  <a href="/memos/new">新規作成</a>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>タイトル</th>
+        <th>作成日時</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="memo : ${memos}">
+        <td th:text="${memo.id}"></td>
+        <td th:text="${memo.title}"></td>
+        <td th:text="${memo.createdAt}"></td>
+        <td>
+          <a th:href="@{/memos/{id}/edit(id=${memo.id})}">編集</a>
+
+          <form th:action="@{/memos/{id}/delete(id=${memo.id})}" method="post" style="display:inline">
+            <button type="submit" onclick="return confirm('削除しますか？')">削除</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
