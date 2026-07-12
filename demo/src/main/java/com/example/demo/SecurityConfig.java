@@ -15,6 +15,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login").permitAll() // ログインページは誰でもアクセス可
+                .requestMatchers("/api/**").permitAll() // APIエンドポイントは誰でもアクセス可
                 .anyRequest().authenticated()          // それ以外はログイン必須
             )
             .formLogin(form -> form
@@ -26,6 +27,9 @@ public class SecurityConfig {
             .logout(logout -> logout
                 .logoutSuccessUrl("/login?logout") // ログアウト後の遷移先
                 .permitAll()
+            )
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/api/**") // ← APIエンドポイントはCSRF除外
             );
 
         return http.build();
