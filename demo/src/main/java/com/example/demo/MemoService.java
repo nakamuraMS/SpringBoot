@@ -21,7 +21,7 @@ public class MemoService {
     // IDで1件取得
     public Memo findById(Long id) {
         return memoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Memo not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("メモが見つかりません（ID: " + id + "）"));
     }
 
     // 保存（新規・更新どちらも）
