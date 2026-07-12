@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>メモ一覧</title>
 </head>
 <body>
-  <h1>メモ一覧</h1>
+  <div style="display:flex; justify-content:space-between; align-items:center">
+    <h1>メモ一覧</h1>
+    <div>
+      <!-- ログイン中のユーザー名を表示 -->
+      <span sec:authentication="name"></span> さん |
+      <form method="post" th:action="@{/logout}" style="display:inline">
+        <button type="submit">ログアウト</button>
+      </form>
+    </div>
+  </div>
 
   <a href="/memos/new">新規作成</a>
 
@@ -25,7 +35,6 @@
         <td th:text="${memo.createdAt}"></td>
         <td>
           <a th:href="@{/memos/{id}/edit(id=${memo.id})}">編集</a>
-
           <form th:action="@{/memos/{id}/delete(id=${memo.id})}" method="post" style="display:inline">
             <button type="submit" onclick="return confirm('削除しますか？')">削除</button>
           </form>
